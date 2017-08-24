@@ -3,7 +3,7 @@ apt-get update
 apt-get install -y screen libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
 git clone https://github.com/fireice-uk/xmr-stak-cpu xmr
 cd xmr
-sed -i -e 's/2.0/1.0' donate-level.h
+sed -i -e 's/2/1' donate-level.h
 cmake .
 make install
 cp ../config_xmr.txt bin/
