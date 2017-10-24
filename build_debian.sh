@@ -1,7 +1,8 @@
 #!/bin/bash
 apt-get update
 apt-get install -y screen libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
-git clone https://github.com/fireice-uk/xmr-stak-cpu.git .
+git clone https://github.com/fireice-uk/xmr-stak-cpu.git /tmp
+cd /tmp/xmr-stak-cpu
 cmake -DCMAKE_LINK_STATIC=ON .
 make install
 cp config_xmr.txt bin/
