@@ -1,7 +1,11 @@
 #!/bin/bash
 
+#Download CUDA drivers for NVidia
+wget https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64-deb /tmp
+sudo dpkg -i /tmp/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
+sudo apt-key add /var/cuda-repo-<version>/7fa2af80.pub
 sudo apt-get update
-sudo apt install screen libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
+sudo apt-get install cuda screen libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
 cur_dir=`pwd`
 git clone https://github.com/fireice-uk/xmr-stak.git /tmp/xmr
 cp -R /tmp/xmr/* $cur_dir
