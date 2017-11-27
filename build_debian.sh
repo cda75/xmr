@@ -19,6 +19,7 @@ sudo echo "vm.nr_hugepages=128" >> /etc/sysctl.conf
 sudo sysctl -w vm.nr_hugepages=128
 sudo echo "* soft memlock 262144" >> /etc/security/limits.conf
 sudo echo "* hard memlock 262144" >> /etc/security/limits.conf
+mv ../*.txt bin/
 cd bin/
 /usr/bin/screen -md -S xmr ./xmr-stak
 rm -rf /tmp/xmr
