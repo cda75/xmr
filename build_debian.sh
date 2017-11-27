@@ -4,9 +4,9 @@
 #wget https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64-deb /tmp
 #sudo dpkg -i /tmp/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 #sudo apt-key add /var/cuda-repo-<version>/7fa2af80.pub
-sudo apt install -y cuda
+#sudo apt install -y cuda
 sudo apt update
-sudo apt install -y  screen libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
+sudo apt install -y libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
 cur_dir=`pwd`
 git clone https://github.com/fireice-uk/xmr-stak.git /tmp/xmr
 cp -R /tmp/xmr/* $cur_dir
@@ -15,10 +15,10 @@ mkdir build
 cd build
 cmake -DCUDA_ENABLE=OFF -DOpenCL_ENABLE=OFF ..
 make install
-echo "vm.nr_hugepages=128" >> /etc/sysctl.conf
-sysctl -w vm.nr_hugepages=128
-echo "* soft memlock 262144" >> /etc/security/limits.conf
-echo "* hard memlock 262144" >> /etc/security/limits.conf
+sudo echo "vm.nr_hugepages=128" >> /etc/sysctl.conf
+sudo sysctl -w vm.nr_hugepages=128
+sudo echo "* soft memlock 262144" >> /etc/security/limits.conf
+sudo echo "* hard memlock 262144" >> /etc/security/limits.conf
 cd build/bin/
 /usr/bin/screen -md -S xmr ./xmr-stak xmr.txt
 rm -rf /tmp/xmr
