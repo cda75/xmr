@@ -50,6 +50,3 @@ cat > /etc/systemd/system/rc-local.service <<EOF
 >EOF
 systemctl enable rc-local
 systemctl start rc-local.service
-
-
-
