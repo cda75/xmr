@@ -9,6 +9,7 @@ sudo apt-get install cuda screen libmicrohttpd-dev libssl-dev cmake build-essent
 cur_dir=`pwd`
 git clone https://github.com/fireice-uk/xmr-stak.git /tmp/xmr
 cp -R /tmp/xmr/* $cur_dir
+sed -i -e 's/2/0/' xmrstak/donate-level.hpp
 mkdir build
 cd build
 cmake ..
