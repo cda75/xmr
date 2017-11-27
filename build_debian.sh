@@ -26,27 +26,28 @@ rm -rf /tmp/xmr
 
 #Creating autostarting service for Debian
 cat > /etc/rc.local <<EOF
->#!/bin/sh -e
->cd ~/xmr/build/bin
->screen -md -S xmr ./xmr-stak 
->exit 0
->EOF
+#!/bin/sh -e
+cd ~/xmr/build/bin
+screen -md -S xmr ./xmr-stak 
+exit 0
+EOF
 #Enable rc.local service
 cat > /etc/systemd/system/rc-local.service <<EOF
->[Unit]
->Description=/etc/rc.local Compatibility
->ConditionPathExists=/etc/rc.local
->
->[Service]
->Type=forking
->ExecStart=/etc/rc.local start
->TimeoutSec=0
->StandardOutput=tty
->RemainAfterExit=yes
->SysVStartPriority=99
->
->[Install]
->WantedBy=multi-user.target
->EOF
+[Unit]
+Description=/etc/rc.local Compatibility
+ConditionPathExists=/etc/rc.local
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+SysVStartPriority=99
+
+[Install]
+WantedBy=multi-user.target
+EOF
+#Starting service
 systemctl enable rc-local
 systemctl start rc-local.service
