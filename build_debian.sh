@@ -1,23 +1,29 @@
 #!/bin/bash
-apt-get update
-apt-get install -y screen libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
+
+sudo apt-get update
+sudo apt install screen libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
 cur_dir=`pwd`
-git clone https://github.com/fireice-uk/xmr-stak-cpu.git /tmp/xmr
+git clone https://github.com/fireice-uk/xmr-stak.git /tmp/xmr
 cp -R /tmp/xmr/* $cur_dir
-cmake -DCMAKE_LINK_STATIC=ON .
+mkdir build
+cd build
+cmake ..
 make install
-mv config_xmr.txt bin/xmr.txt
-mv config_btc.txt bin/btc.txt
+cd ../
+mv config_xmr.txt build/bin/xmr.txt
+mv config_btc.txt build/bin/btc.txt
 echo "vm.nr_hugepages=128" >> /etc/sysctl.conf
 sysctl -w vm.nr_hugepages=128
 echo "* soft memlock 262144" >> /etc/security/limits.conf
 echo "* hard memlock 262144" >> /etc/security/limits.conf
-cd bin/
-/usr/bin/screen -md -S xmr ./xmr-stak-cpu xmr.txt
+cd build/bin/
+/usr/bin/screen -md -S xmr ./xmr-stak xmr.txt
 rm -rf /tmp/xmr
+
+#Creating autostarting service for Debian
 cat > /etc/rc.local <<EOF
 >#!/bin/sh -e
->cd ~/xmr2/bin
+>cd ~/xmr/build/bin
 >screen -md -S xmr ./xmr-stak-cpu xmr.txt
 >exit 0
 >EOF
