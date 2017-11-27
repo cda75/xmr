@@ -19,15 +19,15 @@ sudo echo "vm.nr_hugepages=128" >> /etc/sysctl.conf
 sudo sysctl -w vm.nr_hugepages=128
 sudo echo "* soft memlock 262144" >> /etc/security/limits.conf
 sudo echo "* hard memlock 262144" >> /etc/security/limits.conf
-cd build/bin/
-/usr/bin/screen -md -S xmr ./xmr-stak xmr.txt
+cd bin/
+/usr/bin/screen -md -S xmr ./xmr-stak
 rm -rf /tmp/xmr
 
 #Creating autostarting service for Debian
 cat > /etc/rc.local <<EOF
 >#!/bin/sh -e
 >cd ~/xmr/build/bin
->screen -md -S xmr ./xmr-stak-cpu xmr.txt
+>screen -md -S xmr ./xmr-stak 
 >exit 0
 >EOF
 #Enable rc.local service
