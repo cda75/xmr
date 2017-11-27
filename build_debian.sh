@@ -1,22 +1,20 @@
 #!/bin/bash
 
 #Download CUDA drivers for NVidia
-wget https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64-deb /tmp
-sudo dpkg -i /tmp/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
-sudo apt-key add /var/cuda-repo-<version>/7fa2af80.pub
-sudo apt-get update
-sudo apt-get install cuda screen libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
+#wget https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64-deb /tmp
+#sudo dpkg -i /tmp/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
+#sudo apt-key add /var/cuda-repo-<version>/7fa2af80.pub
+sudo apt install -y cuda
+sudo apt update
+sudo apt install -y  screen libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
 cur_dir=`pwd`
 git clone https://github.com/fireice-uk/xmr-stak.git /tmp/xmr
 cp -R /tmp/xmr/* $cur_dir
 sed -i -e 's/2/0/' xmrstak/donate-level.hpp
 mkdir build
 cd build
-cmake ..
+cmake -DCUDA_ENABLE=OFF -DOpenCL_ENABLE=OFF ..
 make install
-cd ../
-mv config_xmr.txt build/bin/xmr.txt
-mv config_btc.txt build/bin/btc.txt
 echo "vm.nr_hugepages=128" >> /etc/sysctl.conf
 sysctl -w vm.nr_hugepages=128
 echo "* soft memlock 262144" >> /etc/security/limits.conf
